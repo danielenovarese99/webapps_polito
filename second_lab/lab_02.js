@@ -1,2 +1,2 @@
 'use strict';
-console.log("Second lab! SQLite stuff");
+console.log("Second lab! SQLite3 stuff");
