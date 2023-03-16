@@ -15,9 +15,10 @@ function Film(id, title, watchdate = undefined, favorite = false, rating = 0) {
     this.rating = rating;
 }
 
-function FilmLibrary(libraryName = "Library" + (count++)) {
+function FilmLibrary(libraryName = "Library" + (count++),db) {
     this.libraryName = libraryName;
     this.films = [];
+    this.db = db === undefined ? null : db;
 
     this.addNewFilm = (Film) => {
         this.films.push(Film);
@@ -41,10 +42,10 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
         return newlib;
     }
 
-    this.getMoviesFromDb = (myDB) => {
+    this.getMoviesFromDb = () => {
         return new Promise((resolve, reject) => {
             let sql = "SELECT * FROM films";
-            myDB.all(sql, [], (err, result) => {
+            this.db.all(sql, [], (err, result) => {
                 if (err) reject(err);
                 else {
                     resolve(result);
@@ -53,21 +54,22 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
         })
     }
 
-    this.getFavoriteMoviesFromDb = (myDB) => {
+    this.getFavoriteMoviesFromDb = () => {
         return new Promise((resolve, reject) => {
             let sql = "SELECT * FROM films WHERE favorite = 1";
-            myDB.all(sql, [], (err, result) => {
+            this.db.all(sql, [], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             })
         })
     }
 
-    this.getWatchedToday = (myDB) => {
+    this.getWatchedToday = () => {
         return new Promise((resolve, reject) => {
-            let todaysDate = dayjs(); // get today's date - later on will format it accordingly to DB date format
+            let todaysDate = dayjs().format('YYYY-MM-DD'); // get today's date - later on will format it accordingly to DB date format
             let sql = "SELECT * FROM films WHERE watchdate = ?";
-            myDB.all(sql, [todaysDate.format('YYYY-MM-DD')], (err, result) => {
+            console.log(todaysDate);
+            this.db.all(sql, [todaysDate], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             })
@@ -75,11 +77,11 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
     }
 
 
-    this.getWatchedBeforeToday = (myDB) => {
+    this.getWatchedBeforeToday = () => {
         return new Promise((resolve, reject) => {
             let sql = "SELECT * FROM films";
             let todaysDate = dayjs();
-            myDB.all(sql, [], (err, result) => {
+            this.db.all(sql, [], (err, result) => {
                 if (err) reject(err);
                 else {
                     /// filter the results and return the filtered array of results
@@ -97,21 +99,21 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
         })
     }
 
-    this.getFilmsFromRating = (myDB, rating) => {
+    this.getFilmsFromRating = (rating = 0) => {
         return new Promise((resolve, reject) => {
             let sql = "SELECT * FROM films WHERE rating >= ?";
-            myDB.all(sql, [rating], (err, result) => {
+            this.db.all(sql, [rating], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             })
         })
     }
 
-    this.getFilmsByString = (myDB, inputString) => {
+    this.getFilmsByString = (inputString = "") => {
         return new Promise((resolve, reject) => {
             let sql = "SELECT * FROM films";
             let inputStr = inputString.toLowerCase();
-            myDB.all(sql, [], (err, result) => {
+            this.db.all(sql, [], (err, result) => {
                 if (err) reject(err);
                 else {
                     let resultArray = [];
@@ -126,10 +128,10 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
 
 
 
-    this.insertNewFilmInDB = (myDB, Film) => {
+    this.insertNewFilmInDB = (Film) => {
         return new Promise((resolve, reject) => {
             let sql = "INSERT INTO films VALUES (?,?,?,?,?)";
-            myDB.run(sql, [Film.id, Film.title, Film.favorite, Film.watchdate.format('YYYY-MM-DD'), Film.rating], (err) => {
+            this.db.run(sql, [Film.id, Film.title, Film.favorite, Film.watchdate.format('YYYY-MM-DD'), Film.rating], (err) => {
                 if (err) reject(err);
                 else resolve("Done");
             })
@@ -137,20 +139,20 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
     }
 
 
-    this.deleteFilmFromDB = (myDB, id) => {
+    this.deleteFilmFromDB = (id) => {
         return new Promise((resolve, reject) => {
             let sql = "DELETE FROM films WHERE id = ?";
-            myDB.run(sql, [id], (err) => {
+            this.db.run(sql, [id], (err) => {
                 if (err) reject(err);
                 resolve("Done");
             })
         })
     }
 
-    this.unwatchAllMoviesFromDB = (myDB) => {
+    this.unwatchAllMoviesFromDB = () => {
         return new Promise((resolve, reject) => {
             let sql = "UPDATE films SET watchdate = ?";
-            myDB.run(sql, [], (err) => {
+            this.db.run(sql, [], (err) => {
                 if (err) reject(err);
                 resolve("Done");
             })
@@ -168,6 +170,12 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
         console.log("Printing all rated movies by best score!");
         let newmovies = [...this.films].filter(element => element.rating > 0).sort((e1, e2) => e1.rating > e2.rating ? -1 : 1);
         newmovies.forEach(element => console.log(`id: ${element.id}, title: ${element.title}, watchdate: ${element.watchdate === undefined ? undefined : element.watchdate.toString()}, favorite: ${element.favorite}, score: ${element.rating}`));
+    }
+
+
+    this.unsetDB = () => {
+        this.db.close();
+        this.db = null;
     }
 }
 
@@ -192,7 +200,7 @@ function main() {
     //movieLibrary1.deleteFilm(1);
     //movieLibrary1.resetWatchedFilms();
     //movieLibrary1.getRated();
-    const movieLibrary1 = new FilmLibrary();
+    const movieLibrary1 = new FilmLibrary(undefined,db);
 
 
     /*
@@ -222,7 +230,7 @@ function main() {
 
 
     // UNWATCH ALL MOVIES
-    
+
     movieLibrary1.unwatchAllMoviesFromDB(db).then((result, error) => {
         if (error) console.log(error);
         else console.log(result);
@@ -231,8 +239,25 @@ function main() {
 
 
     /// PRINT ALL MOVIES AFTER MAKING CHANGES
+    .then((result,error) => {
+        if(error) console.log(error);
+        else{
+            result.forEach(e => console.log(e));
+        }
+    })
     */
 
+
+    movieLibrary1.unwatchAllMoviesFromDB().then((resolve,error) => {
+        if(error) console.log(error);
+        else{
+            console.log(resolve);
+            movieLibrary1.getMoviesFromDb().then((result,error1) => {
+                if(error1) console.log(error1);
+                else result.forEach(e => console.log(e));
+            })
+        }
+    })
 
 
 
