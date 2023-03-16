@@ -25,10 +25,10 @@ function warmUpExercise(Strings) {
 // esercizio 1
 let count = 0;
 
-function Film(id, title, date = undefined, favorite = false, rating = 0) {
+function Film(id, title, watchdate = undefined, favorite = false, rating = 0) {
     this.id = id;
     this.title = title;
-    this.date = date === undefined ? undefined : dayjs(date);
+    this.watchdate = watchdate === undefined ? undefined : dayjs(watchdate);
     this.favorite = favorite;
     this.rating = rating;
 }
@@ -44,17 +44,17 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
 
     this.printAllMovies = () => {
         this.films.forEach(element => {
-            console.log(`id: ${element.id}, title: ${element.title}, date: ${element.date === undefined ? undefined : element.date.toString()}, favorite: ${element.favorite}, score: ${element.rating}`);
+            console.log(`id: ${element.id}, title: ${element.title}, watchdate: ${element.watchdate === undefined ? undefined : element.watchdate.toString()}, favorite: ${element.favorite}, score: ${element.rating}`);
         });
     }
 
-    this.sortByDate = () => {
+    this.sortBywatchdate = () => {
         let newlib = [...this.films].sort((e1,e2) =>
         {
-            if(e1.date === undefined) return 1;
-            else if(e2.date === undefined) return -1;
+            if(e1.watchdate === undefined) return 1;
+            else if(e2.watchdate === undefined) return -1;
             else{
-                return e1.date.isAfter(e2.date)? 1 : -1;
+                return e1.watchdate.isAfter(e2.watchdate)? 1 : -1;
             }
         });
         return newlib;
@@ -64,13 +64,13 @@ function FilmLibrary(libraryName = "Library" + (count++)) {
     this.deleteFilm = (id) => {this.films = this.films.filter(element => element.id !== id)};
 
     this.resetWatchedFilms = () => this.films.forEach(element =>{
-        if(element.date !== undefined) element.date = undefined;
+        if(element.watchdate !== undefined) element.watchdate = undefined;
     })
 
     this.getRated = () => {
         console.log("Printing all rated movies by best score!");
         let newmovies =  [...this.films].filter(element => element.rating > 0).sort((e1,e2) => e1.rating > e2.rating ? -1 : 1);
-        newmovies.forEach(element =>  console.log(`id: ${element.id}, title: ${element.title}, date: ${element.date === undefined ? undefined : element.date.toString()}, favorite: ${element.favorite}, score: ${element.rating}`));
+        newmovies.forEach(element =>  console.log(`id: ${element.id}, title: ${element.title}, watchdate: ${element.watchdate === undefined ? undefined : element.watchdate.toString()}, favorite: ${element.favorite}, score: ${element.rating}`));
     }
 }
 
@@ -81,7 +81,7 @@ movieLibrary1.addNewFilm(new Film(3, "Star Wars", "06 09 2023",false,5));
 movieLibrary1.addNewFilm(new Film(4, "Matrix", "03 09 2022",false,1));
 movieLibrary1.addNewFilm(new Film(5, "Shrek",undefined,false,1));
 
-//movieLibrary1.sortByDate().forEach(element => console.log(`id: ${element.id}, title: ${element.title}, date: ${element.date === undefined ? undefined : element.date.toString()}, favorite: ${element.favorite}, score: ${element.rating}`));
+//movieLibrary1.sortBywatchdate().forEach(element => console.log(`id: ${element.id}, title: ${element.title}, watchdate: ${element.watchdate === undefined ? undefined : element.watchdate.toString()}, favorite: ${element.favorite}, score: ${element.rating}`));
 
 movieLibrary1.deleteFilm(1);
 movieLibrary1.resetWatchedFilms();
