@@ -1,0 +1,21 @@
+/*
+margin >> space between two boxes
+border >> space between padding and margin
+padding >> space between box border and its contents
+*/
+
+h1{
+    color:rgb(187, 16, 0);
+    text-decoration: line-through;
+}
+
+table{
+    background-color: rgba(148, 243, 243, 0.419);
+}
+td{
+    padding: 0.2em;
+    text-align:center;
+}
+button{
+    margin: 0.1em;
+}
