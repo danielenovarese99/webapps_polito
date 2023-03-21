@@ -7,12 +7,14 @@
     <!-- meta info (author, keywords, useful info for SEO)-->
     <!-- overall content of the page that needs to be loaded BEFORE the page is shown to the user-->
     <title> &clubsuit;Answers page - Web Apps 1 &clubsuit;</title>
-    <link rel="stylesheet" href="./css/style.css" type="text/css">
-    <link rel="stylesheet" href="./css/bootstrap.css" type="text/css">
-    <!-- script tags-->
-    <script src="./js/index.js" type="text/javascript"></script>
-    <script src="./js/bootstrap.js" type="text/javascript"></script>
 
+    
+    <link rel="stylesheet" href="./css/style.css" type="text/css">
+    <script src="./js/index.js" type="text/javascript"></script>
+   
+    <!-- bootstrap-->
+    <script src="./js/bootstrap.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./css/bootstrap.css" type="text/css">
 
 </head>
 
@@ -24,9 +26,33 @@
     <!-- header - main - footer (main structure of web page)-->
     <!-- aside - section - article for specific parts of a page-->
     <!-- div >>> generic container -->
-    <header>
-        <h1>HeapOverrun</h1>
-    </header>
+   
+
+    <!-- NAVBAR component from bootstrap-->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">&copy; Web Applications 1</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Questions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Answers</a>
+              </li>
+            </ul>
+            <span class="navbar-text" style="text-decoration: overline;">
+                Daniele Novarese
+            </span>
+          </div>
+        </div>
+      </nav>
 
 
     <!-- p is a BLOCK element - takes the entire width of the page-->
@@ -102,7 +128,6 @@
                     <td><input type="number" class="input1"></td>
                     <td><button class="addAnswerBTN" onclick="addInputElements()">VOTE</button></td>
                 </tr>
-
             </tbody>
         </table>
 
