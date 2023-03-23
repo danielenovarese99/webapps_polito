@@ -1,0 +1,51 @@
+body {
+    background-color: tan;
+}
+
+@media screen and (min-width: 920px) {
+    body {
+        background-color: rgb(216, 216, 250);
+    }
+
+    .mobile {
+        display: none;
+    }
+
+    .desktop {
+        display: block;
+    }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 920px) {
+    body {
+        background-color: rgba(128, 128, 0, 0.337);
+    }
+
+    .mobile {
+        display: block;
+    }
+
+    .desktop {
+        display: none;
+    }
+}
+
+
+
+.side-col-Filters {
+    background-color: #9399a0;
+}
+
+.selected {
+    background-color: #525252;
+}
+
+;
+
+.floating-button-add-Movie {
+    position:fixed;
+    left:0;
+    bottom:0;
+    display:inline;
+}
