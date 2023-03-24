@@ -126,30 +126,33 @@
                         <div class="col-12 my-5">
                             <span class="h4">All movies (this changes depending on section)</span>
                         </div>
-                        <!-- FOR EACH MOVIE, REPEAT THIS SECTION -->
-                        <div class="col-12">
-                            <div class="row p-2">
-                                <div class="container-fluid d-flex justify-content-between h5">
-                                    <span class="movie-title text-decoration-underline">Movie Title</span>
-                                    <label><input type="checkbox">Favorite</label>
-                                    <span class="watch-date">Month DD, YYYY</span>
-                                    <div>
-                                        <img src="./imgs/rated.png" alt="" width="20" height="20">
-                                        <img src="./imgs/rated.png" alt="" width="20" height="20">
-                                        <img src="./imgs/not_rated.png" alt="" width="20" height="20">
-                                        <img src="./imgs/not_rated.png" alt="" width="20" height="20">
-                                        <img src="./imgs/not_rated.png" alt="" width="20" height="20">
+
+                        <div class="movieListContainer">
+                            <!-- FOR EACH MOVIE, REPEAT THIS SECTION -->
+                            <div class="col-12">
+                                <div class="row p-2">
+                                    <div class="container-fluid d-flex justify-content-between h5">
+                                        <span class="movie-title text-decoration-underline">Movie Title</span>
+                                        <label><input type="checkbox">Favorite</label>
+                                        <span class="watch-date">Month DD, YYYY</span>
+                                        <div>
+                                            <img src="./imgs/rated.png" alt="" width="20" height="20">
+                                            <img src="./imgs/rated.png" alt="" width="20" height="20">
+                                            <img src="./imgs/not_rated.png" alt="" width="20" height="20">
+                                            <img src="./imgs/not_rated.png" alt="" width="20" height="20">
+                                            <img src="./imgs/not_rated.png" alt="" width="20" height="20">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!--- END OF SINGLE MOVIE SECTION-->
                         </div>
-                        <!--- END OF SINGLE MOVIE SECTION-->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="floating-button-add-Movie">
-            <button type="button"><img src="./imgs/plus.png" width="20" height="20"></button>
+        <div class="floatingButtonDiv d-inline bg-light buttonShadow" onclick="toggleShadow()">
+            <button type="button" id="addMovieButton"><img src="./imgs/plus.png" width="40" height="40"></button>
         </div>
     </div>
 
