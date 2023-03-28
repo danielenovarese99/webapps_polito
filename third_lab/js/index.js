@@ -8,6 +8,12 @@ function toggleShadow() {
     }, 100);
     // TODO >> prompt user with window to insert new movie
 }
+
+
+const checkBoxes = Array.from(document.getElementsByClassName("checkBoxInput"));
+checkBoxes.forEach(element => element.checked = true);
+
+
 const filterOptions = Array.from(document.getElementsByClassName('filterOption1'));
 filterOptions.forEach(element => {
     element.onclick = () => {
