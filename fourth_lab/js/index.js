@@ -137,6 +137,7 @@ function displayMovies(filter) {
         movieNameDiv.appendChild(movieNameTrashIcon);
 
 
+        // MOVIE FAVORITE CHECKBOX
         let movieFav = document.createElement('td');
         let checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
@@ -144,13 +145,16 @@ function displayMovies(filter) {
         checkbox.setAttribute('onclick','return false');
         movieFav.appendChild(checkbox);
 
+        // MOVIE WATCHDATE
         let watchDate = document.createElement('td');
         watchDate.innerText = e.date == undefined ? "No watch date available" : e.date.getDate() + " / " + e.date.getMonth() + " / " + e.date.getFullYear();
 
+        // MOVIE RATING
         let rating = document.createElement('td');
         // create div, append to rating <td></td>
         let ratingDiv = document.createElement('div');
         rating.appendChild(ratingDiv);
+        // ADD AS MANY FILLED IMGs AS RATING + EMPTY RATING IMAGES FOR REMAINING RATINGS
         let i, count = 0;
         for (let i = 0; i < 5; i++) {
             if (count < e.rating) {
@@ -174,11 +178,14 @@ function displayMovies(filter) {
             }
         }
 
+        // ADD ALL ELEMENTS CREATED TO CURRENT TABLE ROW
         newTableRow.appendChild(tableID);
         newTableRow.appendChild(movieName);
         newTableRow.appendChild(movieFav);
         newTableRow.appendChild(watchDate);
         newTableRow.appendChild(rating);
+
+        // ADD TABLE ROW TO TABLE BODY
         document.getElementById('movieTableBody').appendChild(newTableRow);
     })
 }
