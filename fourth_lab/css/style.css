@@ -1,0 +1,83 @@
+body {
+    background-color: tan;
+}
+
+@media screen and (min-width: 720px) {
+    body {
+        background-color: rgb(216, 216, 250);
+    }
+
+    .mobile {
+        display: none;
+    }
+
+    .desktop {
+        display: block !important;
+    }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 720px) {
+    body {
+        background-color: rgba(128, 128, 0, 0.337);
+    }
+
+    .mobile {
+        display: block;
+    }
+
+    .desktop {
+        display: none !important;
+    }
+}
+
+
+
+.sidecolFilters{
+    background-color: #ebebeb;
+    color: black;
+}
+.selected1{
+    background-color: white;
+    color:#525252;
+}
+.selected2{
+    background-color: #525252;
+    color:white;
+}
+hr.solid {
+    border-top: 3px solid #bbb;
+  }
+
+
+
+.buttonShadow{
+    box-shadow: 0px 0px 20px 0px cyan
+}
+#addMovieButton{
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+.addMovieContainer{
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    border-radius: 2rem 2rem;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.movieList{
+    background-color: #dedbdb;
+    color:#525252;
+}
+
+.redTest{
+    color:red;
+    text-decoration: underline;
+}
