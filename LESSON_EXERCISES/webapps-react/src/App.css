@@ -1,0 +1,32 @@
+#root{
+  width:100%;
+}
+#mainbody{
+  width:100%;
+  background-color: rgb(197, 255, 247);;
+}
+#topnavbarTitle{
+  background-color: white;
+  color:rgb(48, 58, 61);
+  text-align: start;
+  place-items:center;
+  display:flex;
+  padding-left: 2em;
+}
+table{
+  font-size: 1.5em;
+  table-layout: fixed;
+  background-color: aliceblue;
+  border: 1px solid black;
+  width: 75%;
+  text-align: center;
+}
+td{
+  border: 0.5px dashed green;
+  padding: 0.5em;
+}
+#tablecomponent{
+  display:flex;
+  place-content:center;
+  width: 100%;
+}
