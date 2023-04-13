@@ -18,7 +18,7 @@ function AnswerTable(props) {
                     <tbody>
                         {
                             props.answers.map(element =>
-                                <AnswerRow answer={element} key={count++}></AnswerRow>
+                                <AnswerRow answer={element} key={count++} voteUp={props.voteUp} id={element.id}></AnswerRow>
                             )
                         }
                     </tbody>
