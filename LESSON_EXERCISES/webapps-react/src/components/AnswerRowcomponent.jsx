@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 function AnswerRow(props) {
     return (
         <>
@@ -6,9 +7,9 @@ function AnswerRow(props) {
                 <td>{props.answer.response}</td>
                 <td>{props.answer.score}</td>
                 <td>{props.answer.date.getDay() + "/" + props.answer.date.getMonth() + "/" + props.answer.date.getFullYear()}</td>
-                <td><button type="button" onClick={() => {
+                <td><Button type="button" onClick={() => {
                     props.voteUp(props.id);
-                }}>Todo</button></td>
+                }}>Todo</Button></td>
             </tr>
         </>
     )
