@@ -46,12 +46,24 @@ function App() {
       return [...stateAnswers,answer];
     })
   }
+  const updateAnswer = (answer) =>{
+    setStateAnswers(stateAnswers => {
+      return stateAnswers.map(e1 => {
+        if(e1.id === answer.id){
+          return new Answer(e1.id,answer.response,answer.respName,answer.date,answer.score);
+        }
+        else{
+          return e1;
+        }
+      })
+    })
+  }
 
   return (
     <>
       <Container fluid>
         <TopNavBar title={questions.question}></TopNavBar>
-        <Answers answers={stateAnswers} voteUp={voteUp} addAnswer={addAnswer}/> 
+        <Answers answers={stateAnswers} voteUp={voteUp} addAnswer={addAnswer} updateAnswer={updateAnswer}/> 
       </Container>
 
     </>

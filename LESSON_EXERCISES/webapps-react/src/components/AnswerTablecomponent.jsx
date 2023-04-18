@@ -1,10 +1,26 @@
-import { Table, Col } from "react-bootstrap";
+import { Table, Col, Button } from "react-bootstrap";
 import AnswerRow from "./AnswerRowcomponent";
 import { useState } from 'react';
-
+import AnswerForm from './AnswerFormcomponent';
 function AnswerTable(props) {
     let count = 0;
     let copySortedAnswers = [...props.answers];
+
+    const [showForm, setShowForm] = useState(false);
+    /// updating the showForm state is just a toggle of its own value
+    const updateForm = () => {
+        setShowForm(showForm => {
+            return !showForm;
+        })
+    }
+
+
+    const [editableAnswer, seteditableAnswer] = useState();
+    const updateEditableAnswer = (answer) => {
+        seteditableAnswer(oldanswer => {
+            return answer;
+        })
+    }
 
     /// this is incase the button is inside of the table itself - and is contained in the same component as the data itself
     /// if the button was outside, it's actually easier and better to just pass the copied array.
@@ -20,11 +36,12 @@ function AnswerTable(props) {
 
 
     const sortByScore = () => {
-        console.log("ciao");
         setSortAscending(sortAscending => {
             return !sortAscending;
         })
     }
+
+
     return (
         <>
             <Table>
@@ -40,11 +57,21 @@ function AnswerTable(props) {
                 <tbody>
                     {
                         copySortedAnswers.map(element =>
-                            <AnswerRow answer={element} key={count++} voteUp={props.voteUp} id={element.id}></AnswerRow>
+                            <AnswerRow answer={element} key={count++} voteUp={props.voteUp} id={element.id} showForm={updateForm} seteditableAnswer={seteditableAnswer}></AnswerRow>
                         )
                     }
                 </tbody>
             </Table>
+            {
+            /* We assume that the last item in the answers has the biggest id
+            We can also pass multiple functions as props >>>> addAnswer first calls props.addAnswer and then calls setShowForm() to update the state.
+            */}
+            {showForm ?
+                <AnswerForm key={editableAnswer ? editableAnswer.id : -1} lastId={props.lastId} addAnswer={(answer) => { props.addAnswer(answer); setShowForm(); }} showForm={updateForm} respAnswer={editableAnswer} updateAnswer={(answer) =>{props.updateAnswer(answer); setShowForm();}}/>
+                : <Button onClick={updateForm}>Add answer</Button>
+                /// keys are used to let react know that something has changed - this will cause react to
+                /// FORCE the re-rendering of a component.
+            }
         </>
     )
 }

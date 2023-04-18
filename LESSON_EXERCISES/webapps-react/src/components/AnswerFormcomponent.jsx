@@ -4,19 +4,28 @@ import { Form, Button } from "react-bootstrap";
 
 function AnswerForm(props) {
 
+
     // define input field states and insert them as values in all input fields
     // + onChange event on each of the form.control elements
-    const [response, setResponse] = useState('');
-    const [responseAuthor, setResponseAuthor] = useState('');
-    const [responseDate, setResponseDate] = useState('');
+    const [id, setId] = useState(props.respAnswer ? props.respAnswer.id : '');
+    const [response, setResponse] = useState(props.respAnswer ? props.respAnswer.response : '');
+    const [responseAuthor, setResponseAuthor] = useState(props.respAnswer ? props.respAnswer.respName : '');
+    const [responseDate, setResponseDate] = useState(props.respAnswer ? props.respAnswer.date : '');
 
     const handleSubmit = (event) => {
         event.preventDefault();
         //console.log("submit request has been sent!\n");
         //console.log(responseDate);
-        const newAnswer = new Answer(props.lastId + 1,response,responseAuthor,responseDate,0);
-        props.addAnswer(newAnswer);
-    
+        if (props.respAnswer) {
+            const answer = new Answer(props.respAnswer.id, response, responseAuthor, responseDate);
+            props.updateAnswer(answer);
+        }
+        else {
+            const newAnswer = new Answer(props.lastId + 1, response, responseAuthor, responseDate, 0);
+            props.addAnswer(newAnswer);
+
+        }
+
     }
 
     return (
