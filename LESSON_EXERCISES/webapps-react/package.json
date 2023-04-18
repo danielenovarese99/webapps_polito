@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start" : "src/main.jsx"
+    "start" : "main.jsx"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",

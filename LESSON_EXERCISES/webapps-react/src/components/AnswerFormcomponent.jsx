@@ -1,7 +1,8 @@
 import { useState } from "react";
+import Answer from "../Answers";
 import { Form, Button } from "react-bootstrap";
 
-function AnswerForm() {
+function AnswerForm(props) {
 
     // define input field states and insert them as values in all input fields
     // + onChange event on each of the form.control elements
@@ -9,8 +10,13 @@ function AnswerForm() {
     const [responseAuthor, setResponseAuthor] = useState('');
     const [responseDate, setResponseDate] = useState('');
 
-    const handleSubmit = () => {
-        console.log("submit request has been sent!");
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        //console.log("submit request has been sent!\n");
+        //console.log(responseDate);
+        const newAnswer = new Answer(props.lastId + 1,response,responseAuthor,responseDate,0);
+        props.addAnswer(newAnswer);
+    
     }
 
     return (
@@ -29,6 +35,7 @@ function AnswerForm() {
                     <Form.Control type="date" placeholder="Date" required={true} value={responseDate} onChange={(event) => setResponseDate(event.target.value)} />
                 </Form.Group>
                 <Button variant="primary" type="button" onClick={handleSubmit}>Add answer</Button>
+                <Button onClick={props.showForm}>Cancel</Button>
             </Form>
         </>
     )

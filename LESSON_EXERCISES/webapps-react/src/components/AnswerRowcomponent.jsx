@@ -9,7 +9,7 @@ function AnswerRow(props) {
                 <td>{props.answer.date.getDay() + "/" + props.answer.date.getMonth() + "/" + props.answer.date.getFullYear()}</td>
                 <td><Button type="button" onClick={() => {
                     props.voteUp(props.id);
-                }}>Todo</Button></td>
+                }}>+</Button></td>
             </tr>
         </>
     )

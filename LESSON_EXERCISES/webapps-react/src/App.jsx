@@ -6,13 +6,13 @@ import { Container, Row, Col, Navbar } from 'react-bootstrap'
 import './App.css'
 import { useState } from 'react';
 
-const fakeQuestion = new Question("Chi muore a pasquetta?", "Daniele", "2023-02-07");
+const fakeQuestion = new Question("Statistiche pasquetta", "Daniele", "2023-02-07");
 const answers = [
   // response, respname, score, date
-  {id: 1,response: "Daniele", respName: "Daniele", score: 0, date: new Date() },
-  {id: 2,response: "Luca", respName: "Anon", score: 0, date: new Date() },
-  {id: 3,response: "Marco", respName: "Rob", score: 0, date: new Date() },
-  {id: 4,response: "Rob", respName: "Luca", score: 0, date: new Date() },
+  {id: 1,response: "Daniele", respName: "Daniele", score: 12, date: new Date() },
+  {id: 2,response: "Luca", respName: "Anon", score: 50, date: new Date() },
+  {id: 3,response: "Marco", respName: "Rob", score: -12, date: new Date() },
+  {id: 4,response: "Rob", respName: "Luca", score: 666, date: new Date() },
 ]
 fakeQuestion.answers = answers;
 
@@ -40,12 +40,18 @@ function App() {
       })
     })
   }
+  /// add a new answer >>> copy old answers + add new one at the end
+  const addAnswer = (answer) => {
+    setStateAnswers((stateAnswers) => {
+      return [...stateAnswers,answer];
+    })
+  }
 
   return (
     <>
       <Container fluid>
         <TopNavBar title={questions.question}></TopNavBar>
-        <Answers answers={stateAnswers} voteUp={voteUp} /> 
+        <Answers answers={stateAnswers} voteUp={voteUp} addAnswer={addAnswer}/> 
       </Container>
 
     </>
