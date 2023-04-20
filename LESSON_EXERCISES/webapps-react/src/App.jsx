@@ -65,7 +65,6 @@ function App() {
         <TopNavBar title={questions.question}></TopNavBar>
         <Answers answers={stateAnswers} voteUp={voteUp} addAnswer={addAnswer} updateAnswer={updateAnswer}/> 
       </Container>
-
     </>
   )
 }
