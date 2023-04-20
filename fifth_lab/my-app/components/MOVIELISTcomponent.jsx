@@ -27,7 +27,6 @@ function MovieBody(props) {
             }
             /// FAVORITES
             else if (newfilter == 1) {
-                //console.log("movie filter is favorites.");
                 newmovies = [...props.movielib].filter(element => element.favorite === true);
                 return { filter: newfilter, movies: newmovies };
             }
@@ -61,7 +60,7 @@ function MovieBody(props) {
         })
     }
     const rowStyle = { display: 'flex', justifyContent: 'start', padding: '2em'};
-    
+
     return (
         <>
             <Row style={rowStyle}>
