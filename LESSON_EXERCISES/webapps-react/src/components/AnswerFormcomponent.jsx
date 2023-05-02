@@ -7,6 +7,7 @@ function AnswerForm(props) {
 
     // define input field states and insert them as values in all input fields
     // + onChange event on each of the form.control elements
+    const questionID = props.respAnswer ? props.respAnswer.questionID : 1;
     const [id, setId] = useState(props.respAnswer ? props.respAnswer.id : '');
     const [response, setResponse] = useState(props.respAnswer ? props.respAnswer.response : '');
     const [responseAuthor, setResponseAuthor] = useState(props.respAnswer ? props.respAnswer.respName : '');
@@ -17,11 +18,11 @@ function AnswerForm(props) {
         //console.log("submit request has been sent!\n");
         //console.log(responseDate);
         if (props.respAnswer) {
-            const answer = new Answer(props.respAnswer.id, response, responseAuthor, responseDate);
+            const answer = new Answer(props.respAnswer.id, response, responseAuthor, responseDate,questionID);
             props.updateAnswer(answer);
         }
         else {
-            const newAnswer = new Answer(props.lastId + 1, response, responseAuthor, responseDate, 0);
+            const newAnswer = new Answer(props.lastId + 1, response, responseAuthor, responseDate,questionID, 0);
             props.addAnswer(newAnswer);
 
         }
