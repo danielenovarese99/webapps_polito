@@ -70,15 +70,6 @@ function App() {
     </>
   )
 }
-/*
-index route >> all questions
-questions/:questionID
-questions/:questionID/addAnswer >> show form to add answer
-questions/:questionID/editANswer/:answerID >> show form to edit answer 
-* >>
-*/
-/*
 
-*/
 
 export default App
