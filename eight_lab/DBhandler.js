@@ -82,7 +82,7 @@ exports.createMovie = (title, favorite, watchdate, rating) => {
             .then((result) => {
                 id = result+1;
 
-                console.log(id);
+                //console.log(id);
                 db.all(query, [id, title, favorite, watchdate, rating, 0], (err) => {
                     if (err) reject(err);
                     resolve("Done");
