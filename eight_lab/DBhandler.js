@@ -18,7 +18,7 @@ const db = new sqlite.Database('./DB/films.db', (err) => {
 });
 
 /// RETURNS ALL MOVIES
-    // with filter if specified
+// with filter if specified
 exports.listMovies = (filter = undefined) => {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM films;';
@@ -27,11 +27,11 @@ exports.listMovies = (filter = undefined) => {
             if (err) reject(err);
             else {
                 let movies = rows.map((E) => new Film(E.title, E.favorite, E.watchdate, E.rating));
-                if(filter == undefined){
+                if (filter == undefined) {
                     resolve(movies);
                 }
-                else{
-                    switch(filter){
+                else {
+                    switch (filter) {
                         case 'favorites':
                             movies = movies.filter((E) => E.favorite == 1);
                             break;
@@ -51,41 +51,63 @@ exports.listMovies = (filter = undefined) => {
 
 
 exports.retrieveMovie = (id) => {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         let query = 'SELECT * FROM films WHERE id = ?';
-        db.all(query,[id],(err,rows) => {
-            if(err) reject(err);
+        db.all(query, [id], (err, rows) => {
+            if (err) reject(err);
 
-            const movies = rows.map((E) => new Film(E.title,E.favorite,E.watchdate,E.rating));
+            const movies = rows.map((E) => new Film(E.title, E.favorite, E.watchdate, E.rating));
             resolve(movies);
         })
     })
 };
 
-exports.createMovie = (title,favorite,watchdate,rating) => {
-    return new Promise((resolve,reject) => {
+function getLatestID(){
+    return new Promise((resolve, reject) => {
+        let query = 'SELECT * FROM films';
+        db.all(query, [], (err, result) => {
+            if (err) reject(err);
+            let last_used_id = result[result.length - 1].id;
+            resolve(last_used_id);
+        })
+    })
+}
+
+
+exports.createMovie = (title, favorite, watchdate, rating) => {
+    return new Promise((resolve, reject) => {
         let query = 'INSERT INTO films VALUES (?,?,?,?,?,?)';
-        db.all(query,[15,title,favorite,watchdate,rating,0],(err) => {
-            if(err) reject(err);
-            resolve("Done");
-        })
+        let id;
+        getLatestID()
+            .then((result) => {
+                id = result+1;
+
+                console.log(id);
+                db.all(query, [id, title, favorite, watchdate, rating, 0], (err) => {
+                    if (err) reject(err);
+                    resolve("Done");
+                })
+            })
+            .catch((err) => { console.log("Error in retrieving last available id " + err); })
+
+
     })
 };
 
-exports.updateMovie = (id,title,favorite,watchdate,rating) => {
-    return new Promise((resolve,reject) => {
+exports.updateMovie = (id, title, favorite, watchdate, rating) => {
+    return new Promise((resolve, reject) => {
         let query = 'UPDATE films SET title = ?, favorite = ?, watchdate = ?, rating = ? WHERE id = ?';
-        db.all(query,[title,favorite,watchdate,rating,id],(err) => {
-            if(err) reject(err);
+        db.all(query, [title, favorite, watchdate, rating, id], (err) => {
+            if (err) reject(err);
             resolve("Done");
         })
     })
 };
 
-exports.updateRating = (id,action) => {
-    return new Promise((resolve,reject) => {
+exports.updateRating = (id, action) => {
+    return new Promise((resolve, reject) => {
         let query;
-        switch(action){
+        switch (action) {
             case "upvote":
                 query = 'UPDATE films SET rating = rating + 1 WHERE id = ?';
                 break;
@@ -94,17 +116,17 @@ exports.updateRating = (id,action) => {
                 break;
         }
 
-        db.all(query,[id], (err) => {
-            if(err) reject(err);
+        db.all(query, [id], (err) => {
+            if (err) reject(err);
             resolve("Done");
         })
     })
 }
 
-exports.updateFavorite = (id,newFavorite) => {
-    return new Promise((resolve,reject) => {
+exports.updateFavorite = (id, newFavorite) => {
+    return new Promise((resolve, reject) => {
         let query;
-        switch(action){
+        switch (newFavorite) {
             case 1:
                 query = 'UPDATE films SET favorite = "1" WHERE id = ?';
                 break;
@@ -113,20 +135,24 @@ exports.updateFavorite = (id,newFavorite) => {
                 break;
         }
 
-        db.all(query,[id], (err) => {
-            if(err) reject(err);
+        db.all(query, [id], (err) => {
+            if (err) reject(err);
             resolve("Done");
         })
     })
-}
+};
+
+
 
 
 exports.deleteMovie = (id) => {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         let query = 'DELETE FROM films WHERE id = ?';
-        db.all(query,[id],(err) => {
-            if(err) reject(err);
+        db.all(query, [id], (err) => {
+            if (err) reject(err);
             resolve("Done");
         })
     })
 }
+
+

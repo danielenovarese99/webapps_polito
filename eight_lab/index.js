@@ -41,10 +41,11 @@ app.get('/api/films/:id', (req, res) => {
     .catch((err) => res.send(err));
 });
 
-/// CREATE NEW FILM
+
+/// CREATE NEW FILM - WORKS
 app.post('/api/films',(req,res) => {
 
-    console.log(req.body);
+    //console.log(req.body);
 
 
     let title = req.body.title;
@@ -67,12 +68,14 @@ app.post('/api/films',(req,res) => {
 
 
 
-/// UPDATE EXISTING FILM
+/// UPDATE EXISTING FILM - to be tested
 app.put('/api/films/:id', (req, res) => {
     let title = req.body.title;
     let favorite = req.body.favorite;
     let watchdate = req.body.watchdate;
     let rating = req.body.rating;
+
+    console.log(req.body);
 
     if(title == undefined || favorite == undefined || watchdate == undefined || rating == undefined){
         res.status(422).end(); // wrong data - 422
@@ -86,21 +89,25 @@ app.put('/api/films/:id', (req, res) => {
 })
 
 
-/// UPVOTE / DOWNVOTE A FILM
+/// UPVOTE / DOWNVOTE A FILM - WORKS
 app.post('/api/films/:id/vote', (req, res) => {
     let myid = req.params.id;
     let action = req.body.action;
 
-    if(action == undefined && action != "upvote" && action != "downvote"){
+    console.log(req.body);
+
+    if(action != "upvote" && action != "downvote"){
         res.status(422).end(); // invalid action - 422
     }
+
 
     db.updateRating(myid,action)
     .then(() => res.status(200).end()) // success - 200
     .catch((err) => res.send(err)); // error - 500 || Not found - 404
 });
 
-/// SET FILM AS FAVORITE / UNSET
+
+/// SET FILM AS FAVORITE / UNSET - WORKS
 app.post('/api/films/:id/favorite', (req, res) => {
     // save POST BODY REQ value >> if 1, try and set movie with given id as FAVORITE ( 1 )
     //                              if 0, try and set movie with given id as not favorite ( 0 )                
