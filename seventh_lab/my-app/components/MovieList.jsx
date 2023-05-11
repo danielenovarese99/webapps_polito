@@ -5,6 +5,8 @@ import MovieForm from './MovieForm';
 import { useContext, useState } from 'react';
 import Movies from '../Movies';
 import { Link, useParams } from 'react-router-dom';
+
+
 function MovieList(props) {
 
     let MovieManagement = useContext(Movies);
