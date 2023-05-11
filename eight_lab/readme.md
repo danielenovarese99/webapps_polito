@@ -134,7 +134,7 @@ Film library API
         Unprocessable entity 422 (validation error)
     ]
 
-# DELETE AN EXISTING FILM GIVEN ITS ID []
+# DELETE AN EXISTING FILM GIVEN ITS ID [x]
 
     [DELETE] [/api/films/:id]
     [Delete an existing film given its id]
