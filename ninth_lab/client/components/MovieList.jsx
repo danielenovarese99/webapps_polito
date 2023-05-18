@@ -3,7 +3,7 @@ import FilterList from './FilterList';
 import MovieListRow from '../components/MovieListRow';
 import MovieForm from './MovieForm';
 import {useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import APIURL from '../src/main';
 import Film from '../classes/Film';
 
@@ -23,9 +23,9 @@ function MovieList(props) {
         setFilter(newFilter);
     }
     useEffect(() => {
-        setMovieCount(movies.length);
-        console.log("Updating movie count > .." + movies.length);
-    },[movies.length]);
+        setMovieCount(movies[movies.length-1].id + 1);
+        console.log("Updating movie count > .." + movies[movies.length-1].id + 1);
+    },[movies.length]); // update the latest movie id with the last one available, everytimme the amount of movies in the APP changes
 
 
     useEffect(() => {
